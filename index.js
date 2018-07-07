@@ -3,8 +3,14 @@
 function checkCashRegister(price, cash, cid) {
     var change = cash - price;
     // Here is your change, ma'am.
-    console.log(change);
-    return change + cid;
+    let drawCopy = new Map(cid);
+    let totalCash = 0;
+    for (let val in drawCopy.values()){
+      console.log(val);
+    }
+    console.log(totalCash);
+
+    return change;
   }
   
   // Example cash-in-drawer array:
