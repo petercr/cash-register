@@ -5,8 +5,8 @@ function checkCashRegister(price, cash, cid) {
     // Here is your change, ma'am.
     let drawCopy = new Map(cid);
     let totalCash = 0;
-    for (let val in drawCopy.values()){
-      console.log(val);
+    for (let val of drawCopy.values()){
+      totalCash += Math.floor(val);
     }
     console.log(totalCash);
 
