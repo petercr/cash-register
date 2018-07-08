@@ -9,8 +9,14 @@ function checkCashRegister(price, cash, cid) {
       totalCash += Math.floor(val);
     }
     console.log(totalCash);
+    if (totalCash - change) {
+      NoDeal(cid);
+    }
+    return {status: "OPEN", change: cid.reverse()};
+  }
 
-    return change;
+  function NoDeal(cid) {
+    return {status: "INSUFFICIENT_FUNDS", change: cid};
   }
   
   // Example cash-in-drawer array:
