@@ -1,8 +1,11 @@
 // based on the code from Free Code Camp
 
+let cid2;
+
 function checkCashRegister(price, cash, cid) {
     const change = cash - price;
     // Here is your change, ma'am.
+    cid2 = cid;
     let drawValue = new Map(cid.reverse());
     let totalCash = 0;
     for (let val of drawValue.values()){
