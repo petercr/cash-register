@@ -22,24 +22,30 @@ function checkCashRegister(price, cash, cid) {
       let change2 = change;
 
       // loop through array until change = 0 
-      for (let [x, y] of return_draw) {
-        console.log(x, y);
+      for (let x = 0; x < cid.length; x++) {
+        console.log(x);
 
-        // switch/case statement to subtract until change = 0
-        switch (x) {
-          case "ONE HUNDRED" :
-            let hundo = 100;
-            console.log(return_draw[x]);
-
-            y -= hundo;
-            change2 -= hundo;
+        if (change2 <= 0) {
+         return giveBackChange(return_draw);
         }
 
-      // return open and pass back return_draw as .change
-      return {status: "OPEN", change: return_draw};
+        let value = return_draw[x][1];
+
+        if (change2 > 0 && change2 / value > 1) {
+          let amount = Math.floor(change2 / value) * value;
+          change2 -= amount;
+          return_draw[x][1] -= amount;
+
+        }
     }
+ 
   }
 }
+
+  function giveBackChange(moneyBack) {
+         // return open and pass back return_draw as .change
+         return {status: "OPEN", change: moneyBack};
+  }
 
   function NoDeal(cid) {
     return {status: "INSUFFICIENT_FUNDS", change: cid};
