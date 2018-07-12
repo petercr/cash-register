@@ -3,7 +3,7 @@
 let cid2;
 
 function checkCashRegister(price, cash, cid) {
-    const change = cash - price;
+    let change = cash - price;
     // Here is your change, ma'am.
     cid2 = cid;
     let drawValue = new Map(cid.reverse());
@@ -16,31 +16,30 @@ function checkCashRegister(price, cash, cid) {
       return NoDeal(cid);
     }
     else {
-      // new variable to subtract values from
+      // new variable to subtract values from &&
+       
       const return_draw = cid;
-      // copy of change to subtract from
-      let change2 = change;
 
-      // loop through array until change = 0 
-      for (let x = 0; x < cid.length; x++) {
-        console.log(x);
 
-        if (change2 <= 0) {
-         return giveBackChange(return_draw);
+        if (change >= 100){
+          change-=100;
+          return_draw[0][1]-= 100;
+          console.log(change, return_draw);
         }
-
-        let value = return_draw[x][1];
-
-        if (change2 > 0 && change2 / value > 1) {
-          let amount = Math.floor(change2 / value) * value;
-          change2 -= amount;
-          return_draw[x][1] -= amount;
-
+        else if (change / 50 >= 1) {
+          change -= 50;
+          return_draw[1][1] -= 50;
         }
+        else if (change / 20 >= 1) {
+          const times = Math.floor(change / 20);
+          change -= times * 20;
+          return_draw -= times * 20;
+        }
+       
+        return giveBackChange(return_draw);
     }
- 
   }
-}
+
 
   function giveBackChange(moneyBack) {
          // return open and pass back return_draw as .change
