@@ -46,12 +46,22 @@ function checkCashRegister(price, cash, cid) {
           change -= times;
           return_draw[4][1] -= times;
         }
-         if (change >= .25 ) {
-          const times = Math.floor(change / .25);
-          change -= (times * .25);
-          return_draw[5][1] -= (times * .25);
+         if (change / .25 >= 1 ) {
+          const times = Math.floor((change * 100) / (.25 * 100));
+          change -= (times * .25).toFixed(2);
+          return_draw[5][1] -= (times * .25).toFixed(2);
         }
-       
+        if (change / .05 >= 1 ) {
+          const times = Math.floor(change / .05);
+          change -= (times * .05).toFixed(2);
+          return_draw[5][1] -= (times * .05).toFixed(2);
+        }
+        if (change / .01 >= .01 ) {
+          const times = Math.floor(change / .01);
+          change -= (times * .01).toFixed(2);
+          return_draw[5][1] -= (times * .01).toFixed(2);
+        }
+       console.table(return_draw);
         return giveBackChange(return_draw);
     }
   }
@@ -77,5 +87,5 @@ function checkCashRegister(price, cash, cid) {
   // ["TWENTY", 60],
   // ["ONE HUNDRED", 100]]
   
-  let answer = checkCashRegister(5.25, 10, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+  let answer = checkCashRegister(5.26, 10, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
   console.log(answer);
