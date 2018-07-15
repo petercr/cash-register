@@ -34,12 +34,12 @@ function checkCashRegister(price, cash, cid) {
          if (change / 10 >= 1) {
           const times = Math.floor(change / 10);
           change -= times * 10;
-          return_draw[2][1] -= times * 10;
+          return_draw.push(cid[2][0], times * 10);
         }
          if (change / 5 >= 1) {
           const times = Math.floor(change / 5);
           change -= times * 5;
-          return_draw[3][1] -= times * 5;
+          return_draw.push(cid[3][0], times * 5);
         }
          if (change / 1 >= 1) {
           const times = Math.floor(change / 1);
