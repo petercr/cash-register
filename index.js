@@ -47,19 +47,26 @@ function checkCashRegister(price, cash, cid) {
           return_draw[4][1] -= times;
         }
          if (change / .25 >= 1 ) {
-          const times = Math.floor((change * 100) / (.25 * 100));
-          change -= (times * .25).toFixed(2);
-          return_draw[5][1] -= (times * .25).toFixed(2);
+          const times = Math.floor(change / .25);
+          const coin =  Number((times * .25).toFixed(2));
+          console.log(coin);
+          change -= Number(coin);
+          return_draw[5][1] -= Number(coin);
+        }
+        if (change / .1 >= 1 ) {
+          const times = Math.floor(change / .1);
+          change -= (times * .1).toFixed(2);
+          return_draw[6][1] -= (times * .1).toFixed(2);
         }
         if (change / .05 >= 1 ) {
           const times = Math.floor(change / .05);
           change -= (times * .05).toFixed(2);
-          return_draw[5][1] -= (times * .05).toFixed(2);
+          return_draw[7][1] -= (times * .05).toFixed(2);
         }
         if (change / .01 >= .01 ) {
           const times = Math.floor(change / .01);
           change -= (times * .01).toFixed(2);
-          return_draw[5][1] -= (times * .01).toFixed(2);
+          return_draw[8][1] -= (times * .01).toFixed(2);
         }
        console.table(return_draw);
         return giveBackChange(return_draw);
@@ -75,6 +82,10 @@ function checkCashRegister(price, cash, cid) {
   function NoDeal(cid) {
     return {status: "INSUFFICIENT_FUNDS", change: cid};
   }
+
+  function round(value, decimals) {
+    return Number(Math.round(value +'e'+ decimals) +'e-'+ decimals).toFixed(decimals);
+}
   
   // Example cash-in-drawer array:
   // [["PENNY", 1.01],
