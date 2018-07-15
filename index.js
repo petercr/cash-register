@@ -18,18 +18,18 @@ function checkCashRegister(price, cash, cid) {
     else {
       // new variable to subtract values from &&
        
-      const return_draw = cid;
+      const return_draw = [];
 
 
         if (change >= 100){
           change-=100;
-          return_draw[0][1]-= 100;
+          return_draw.push(cid[0]);
           console.log(change, return_draw);
         }
          if (change / 20 >= 1) {
           const times = Math.floor(change / 20);
           change -= times * 20;
-          return_draw[1][1] -= times * 20;
+          return_draw.push(cid[1][0], times * 20);
         }
          if (change / 10 >= 1) {
           const times = Math.floor(change / 10);
@@ -98,5 +98,5 @@ function checkCashRegister(price, cash, cid) {
   // ["TWENTY", 60],
   // ["ONE HUNDRED", 100]]
   
-  let answer = checkCashRegister(5.26, 10, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+  let answer = checkCashRegister(20, 40, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
   console.log(answer);
