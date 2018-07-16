@@ -49,7 +49,6 @@ function checkCashRegister(price, cash, cid) {
          if (change / .25 >= 1 ) {
           const times = Math.floor(change / .25);
           const coin =  Number((times * .25).toFixed(2));
-          console.log(coin);
           change -= coin;
           return_draw.push([cid[5][0], coin]);
         }
@@ -67,7 +66,7 @@ function checkCashRegister(price, cash, cid) {
         }
         if (change / .01 >= .01 ) {
           const times = Math.floor(change / .01);
-          const coin =  Number((times * .01).toFixed(2));
+          const coin =  Number(round(times * .01, 2));
           change -= coin;
           return_draw.push([cid[8][0], coin]);
         }
@@ -101,5 +100,5 @@ function checkCashRegister(price, cash, cid) {
   // ["TWENTY", 60],
   // ["ONE HUNDRED", 100]]
   
-  let answer = checkCashRegister(26.74, 40, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+  let answer = checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
   console.log(answer);
