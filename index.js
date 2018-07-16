@@ -65,7 +65,7 @@ function checkCashRegister(price, cash, cid) {
           return_draw.push([cid[7][0], coin]);
         }
         if (change / .01 >= .01 ) {
-          const times = Math.floor(change / .01);
+          const times = Number(round(change / .01, 2));
           const coin =  Number(round(times * .01, 2));
           change -= coin;
           return_draw.push([cid[8][0], coin]);
