@@ -4,13 +4,14 @@ let cid2;
 
 function checkCashRegister(price, cash, cid) {
   let change = cash - price;
+  const original_change = change;
   // Here is your change, ma'am.
   cid2 = cid;
-  let drawValue = new Map(cid.reverse());
   let totalCash = 0;
-  for (let val of drawValue.values()) {
-    totalCash += Math.floor(val);
+  for (let x = 0; x < cid.length; x++) {
+    totalCash += cid[x][1];
   }
+  totalCash = Number(totalCash.toFixed(2));
   console.log(totalCash, change);
   if (totalCash < change) {
     return NoDeal(cid);
@@ -79,21 +80,28 @@ function checkCashRegister(price, cash, cid) {
 
     console.table(return_draw);
     // console.log(change);
-    return giveBackChange(return_draw, change);
+    return giveBackChange(return_draw, change, totalCash);
   }
 }
 
-function giveBackChange(moneyBack, change) {
+function giveBackChange(moneyBack, change, original_change) {
+  // get the total amount of cash back
   let drawValue = 0;
-  moneyBack.forEach((key) => {
-    console.log(key[1]);
-    drawValue += Number(key[1].toFixed(2));
-  });
-  console.log(drawValue);
-  if (change > 0.0) {
-    return { status: "INSUFFICIENT_FUNDS", change: moneyBack };
-  } else {
-    // return open and pass back return_draw as .change
+  for (let x = 0; x < moneyBack.length; x++) {
+    drawValue += moneyBack[x][1];
+  }
+  drawValue = Number(drawValue.toFixed(2));
+  console.log(drawValue, original_change);
+
+  // if there's still change left, then return INSUFFICIENT_FUNDS and money
+  if (change > 0.00) {
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  } 
+  else if (drawValue === original_change) {
+    return {status: "CLOSED", change: moneyBack};
+  }
+  else {
+    // return open and pass back moneyBack
     return { status: "OPEN", change: moneyBack };
   }
 }
@@ -119,15 +127,5 @@ function round(value, decimals) {
 // ["TWENTY", 60],
 // ["ONE HUNDRED", 100]]
 
-let answer = checkCashRegister(3.26, 100, [
-  ["PENNY", 1.01],
-  ["NICKEL", 2.05],
-  ["DIME", 3.1],
-  ["QUARTER", 4.25],
-  ["ONE", 90],
-  ["FIVE", 55],
-  ["TEN", 20],
-  ["TWENTY", 60],
-  ["ONE HUNDRED", 100]
-]);
+let answer = checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
 console.log(answer);
