@@ -4,7 +4,6 @@ let cid2;
 
 function checkCashRegister(price, cash, cid) {
   let change = cash - price;
-  const original_change = change;
   // Here is your change, ma'am.
   cid2 = cid;
   let drawValue = new Map(cid.reverse());
@@ -12,10 +11,11 @@ function checkCashRegister(price, cash, cid) {
   for (let val of drawValue.values()) {
     totalCash += Number(val.toFixed(2));
   }
+  let all_of_cash = totalCash === change;
   console.log(totalCash, change);
   if (totalCash < change) {
     return NoDeal(cid);
-  } else {
+  } 
     // new variable to subtract values from &&
 
     const return_draw = [];
@@ -25,11 +25,17 @@ function checkCashRegister(price, cash, cid) {
       return_draw.push([cid[0], 100]);
       console.log(change, return_draw);
     }
+    else if (all_of_cash) {
+      return_draw.push([cid[0][0], 0]);
+    }
     if (change / 20 >= 1) {
       const times = Math.floor(change / 20);
       const amount = times * 20 > cid[1][1] ? cid[1][1] : times * 20;
       change -= amount;
       return_draw.push([cid[1][0], amount]);
+    }
+    else if (all_of_cash){
+      return_draw.push([cid[1][0], 0]);
     }
     if (change / 10 >= 1) {
       const times = Math.floor(change / 10);
@@ -37,17 +43,26 @@ function checkCashRegister(price, cash, cid) {
       change -= amount;
       return_draw.push([cid[2][0], amount]);
     }
+    else if (all_of_cash){
+      return_draw.push([cid[2][0], 0]);
+    }
     if (change / 5 >= 1) {
       const times = Math.floor(change / 5);
       const amount = times * 5 > cid[3][1] ? cid[3][1] : times * 5;
       change -= amount;
       return_draw.push([cid[3][0], amount]);
     }
+    else if (all_of_cash){
+      return_draw.push([cid[3][0], 0]);
+    }
     if (change / 1 >= 1) {
       const times = Math.floor(change / 1);
       const amount = times > cid[4][1] ? cid[4][1] : times;
       change -= amount;
       return_draw.push([cid[4][0], amount]);
+    }
+    else if (all_of_cash){
+      return_draw.push([cid[4][0], 0]);
     }
     if (change / 0.25 >= 1) {
       const times = Math.floor(change / 0.25);
@@ -56,12 +71,18 @@ function checkCashRegister(price, cash, cid) {
       change -= amount;
       return_draw.push([cid[5][0], amount]);
     }
+    else if (all_of_cash){
+      return_draw.push([cid[5][0], 0]);
+    }
     if (change / 0.1 >= 1) {
       const times = Math.floor(change / 0.1);
       const coin = Number((times * 0.1).toFixed(2));
       const amount = coin > cid[6][1] ? cid[6][1] : coin;
       change -= amount;
       return_draw.push([cid[6][0], amount]);
+    }
+    else if (all_of_cash){
+      return_draw.push([cid[6][0], 0]);
     }
     if (change / 0.05 >= 1) {
       const times = Math.floor(change / 0.05);
@@ -70,6 +91,9 @@ function checkCashRegister(price, cash, cid) {
       change -= amount;
       return_draw.push([cid[7][0], amount]);
     }
+    else if (all_of_cash) {
+      return_draw.push([cid[7][0], 0]);
+    }
     if (change / 0.01 >= 0.01) {
       const times = Number(round(change / 0.01, 2));
       const coin = Number(round(times * 0.01, 2));
@@ -77,29 +101,32 @@ function checkCashRegister(price, cash, cid) {
       change -= amount;
       return_draw.push([cid[8][0], amount]);
     }
+    else if (all_of_cash){
+      return_draw.push([cid[8][0], 0]);
+    }
 
     console.table(return_draw);
     // console.log(change);
     return giveBackChange(return_draw, change, totalCash);
-  }
+  
 }
 
 function giveBackChange(moneyBack, change, original_change) {
   // get the total amount of cash back
-  // let drawValue = 0;
-  // for (let x = 0; x < moneyBack.length; x++) {
-  //   drawValue += moneyBack[x][1];
-  // }
-  // drawValue = Number(drawValue.toFixed(2));
-  // console.log(drawValue, original_change);
+  let drawValue = 0;
+  for (let x = 0; x < moneyBack.length; x++) {
+    drawValue += moneyBack[x][1];
+  }
+  drawValue = Number(drawValue.toFixed(2));
+  console.log(drawValue, original_change);
 
   // if there's still change left, then return INSUFFICIENT_FUNDS and money
   if (change > 0.00) {
     return { status: "INSUFFICIENT_FUNDS", change: [] };
   } 
-  // else if (drawValue === original_change) {
-  //   return {status: "CLOSED", change: moneyBack};
-  // }
+  else if (drawValue === original_change) {
+    return {status: "CLOSED", change: moneyBack.reverse()};
+  }
   else {
     // return open and pass back moneyBack
     return { status: "OPEN", change: moneyBack };
@@ -127,5 +154,5 @@ function round(value, decimals) {
 // ["TWENTY", 60],
 // ["ONE HUNDRED", 100]]
 
-let answer = checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+let answer = checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
 console.log(answer);
