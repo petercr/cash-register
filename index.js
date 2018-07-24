@@ -7,11 +7,11 @@ function checkCashRegister(price, cash, cid) {
   const original_change = change;
   // Here is your change, ma'am.
   cid2 = cid;
+  let drawValue = new Map(cid.reverse());
   let totalCash = 0;
-  for (let x = 0; x < cid.length; x++) {
-    totalCash += cid[x][1];
+  for (let val of drawValue.values()) {
+    totalCash += Number(val.toFixed(2));
   }
-  totalCash = Number(totalCash.toFixed(2));
   console.log(totalCash, change);
   if (totalCash < change) {
     return NoDeal(cid);
@@ -86,20 +86,20 @@ function checkCashRegister(price, cash, cid) {
 
 function giveBackChange(moneyBack, change, original_change) {
   // get the total amount of cash back
-  let drawValue = 0;
-  for (let x = 0; x < moneyBack.length; x++) {
-    drawValue += moneyBack[x][1];
-  }
-  drawValue = Number(drawValue.toFixed(2));
-  console.log(drawValue, original_change);
+  // let drawValue = 0;
+  // for (let x = 0; x < moneyBack.length; x++) {
+  //   drawValue += moneyBack[x][1];
+  // }
+  // drawValue = Number(drawValue.toFixed(2));
+  // console.log(drawValue, original_change);
 
   // if there's still change left, then return INSUFFICIENT_FUNDS and money
   if (change > 0.00) {
     return { status: "INSUFFICIENT_FUNDS", change: [] };
   } 
-  else if (drawValue === original_change) {
-    return {status: "CLOSED", change: moneyBack};
-  }
+  // else if (drawValue === original_change) {
+  //   return {status: "CLOSED", change: moneyBack};
+  // }
   else {
     // return open and pass back moneyBack
     return { status: "OPEN", change: moneyBack };
